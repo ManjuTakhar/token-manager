@@ -12,23 +12,90 @@ The `TokenManager` class manages authentication tokens with configurable time-to
 - **Renew**: Extend the lifetime of existing unexpired tokens
 - **Count**: Count the number of unexpired tokens at a given time
 
-## Usage
+### Usage
 
-```python
-from token_manager import TokenManager
+The Token Manager CLI allows you to create, renew, count, and display tokens with an expiration time (TTL).  
+All commands require the `--ttl` flag, which defines the time-to-live in seconds.
 
-# Initialize with time-to-live of 5 seconds
-tokenManager = TokenManager(timeToLive=5)
+#### Command Syntax
 
-# Generate a new token
-tokenManager.generate("token123", currentTime=2)
+```bash
+python cli.py --ttl <seconds> <command> [arguments...]
+```
 
-# Renew an unexpired token
-tokenManager.renew("token123", currentTime=4)
+#### Generate a Token
 
-# Count unexpired tokens
-count = tokenManager.countUnexpiredTokens(currentTime=6)
-print(count)  # Output: 1
+Creates a new token and sets its expiry based on the TTL.
+
+```bash
+python cli.py --ttl <ttl_seconds> generate <token_id> <current_time>
+```
+
+Example:
+
+```bash
+python cli.py --ttl 10 generate user123 100
+```
+
+Output:
+
+```
+Token 'user123' generated. Expires at time 110
+```
+
+#### Renew a Token
+
+Renews an existing token that has not expired.
+
+```bash
+python cli.py --ttl <ttl_seconds> renew <token_id> <current_time>
+```
+
+Example:
+
+```bash
+python cli.py --ttl 10 renew user123 105
+```
+
+Output:
+
+```
+Token 'user123' renewed. New expiry time: 115
+```
+
+#### Count Unexpired Tokens
+
+Returns the number of tokens that are still valid at the given time.
+
+```bash
+python cli.py --ttl <ttl_seconds> count <current_time>
+```
+
+Example:
+
+```bash
+python cli.py --ttl 10 count 120
+```
+
+Output:
+
+```
+1
+```
+
+#### Show All Tokens
+
+Displays all existing tokens along with their expiration timestamps.
+
+```bash
+python cli.py --ttl <ttl_seconds> show
+```
+
+Example Output:
+
+```
+user123: 115
+session42: 200
 ```
 
 ## API Reference
@@ -70,13 +137,6 @@ Count the number of unexpired tokens at the given currentTime.
 **Returns:**
 - `int`: Number of unexpired tokens
 
-## Example
-
-Run the example:
-
-```bash
-python token_manager.py
-```
 
 ## Issues to Fix
 
