@@ -154,7 +154,7 @@ The following issues have been identified and should be addressed in future impr
 
 4. **Inefficient counting**: The `countUnexpiredTokens` method iterates through all tokens (including expired ones) every time it's called. This is inefficient for large numbers of tokens, using a more efficient data structure.
 
-5. **No token expiration mechanism**: There's no way to manually or automatically clean up expired tokens. The token manager should have a min-heap[(token_expiry, token)] and a method to remove expired tokens, and this new method can be invoked everytime a token is generated, renewed and unexpired tokens are counted.
+5. **No token expiration mechanism**: There's no way to manually or automatically clean up expired tokens. The token manager should have a min-heap[(token_expiry_time, token)] and a method to remove expired tokens, and this new method can be invoked everytime a token is generated, renewed and unexpired tokens are counted.
 
 6. **No logging or monitoring**: There's no logging capability for debugging, auditing, or monitoring token operations. Consider adding logging for important operations.
 
