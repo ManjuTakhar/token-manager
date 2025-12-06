@@ -154,9 +154,9 @@ The following issues have been identified and should be addressed in future impr
 
 4. **No error handling**: Methods don't handle edge cases or raise appropriate exceptions for invalid inputs. Consider adding validation and meaningful error messages.
 
-5. **Inefficient counting**: The `countUnexpiredTokens` method iterates through all tokens (including expired ones) every time it's called. This is inefficient for large numbers of tokens. Consider implementing cleanup during counting or using a more efficient data structure.
+5. **Inefficient counting**: The `countUnexpiredTokens` method iterates through all tokens (including expired ones) every time it's called. This is inefficient for large numbers of tokens, using a more efficient data structure.
 
-6. **No cleanup mechanism**: There's no way to manually or automatically clean up expired tokens. Add a method to remove expired tokens or implement automatic cleanup.
+6. **No token expiration mechanism**: There's no way to manually or automatically clean up expired tokens. Add a method to remove expired tokens, and this new method can be invoked everytime a token is generated, renewed and unexpired tokens are counted.
 
 7. **No logging or monitoring**: There's no logging capability for debugging, auditing, or monitoring token operations. Consider adding logging for important operations.
 
