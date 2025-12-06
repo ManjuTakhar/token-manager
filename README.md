@@ -144,29 +144,27 @@ The following issues have been identified and should be addressed in future impr
 
 1. **No thread safety**: The code is not thread-safe. Concurrent access from multiple threads could lead to race conditions and data corruption. Consider adding locks or using thread-safe data structures.
 
-2. **Memory leak**: Expired tokens are never removed from the internal dictionary. Over time, this causes memory to grow indefinitely as expired tokens accumulate. Implement automatic cleanup of expired tokens.
-
-3. **No input validation**: 
+2. **No input validation**: 
    - No validation that `timeToLive` is positive
    - No validation that `currentTime` is non-negative
    - No validation that `tokenId` is not empty or None
    - No type checking at runtime (type hints are not enforced)
 
-4. **No error handling**: Methods don't handle edge cases or raise appropriate exceptions for invalid inputs. Consider adding validation and meaningful error messages.
+3. **No error handling**: Methods don't handle edge cases or raise appropriate exceptions for invalid inputs. Consider adding validation and meaningful error messages.
 
-5. **Inefficient counting**: The `countUnexpiredTokens` method iterates through all tokens (including expired ones) every time it's called. This is inefficient for large numbers of tokens, using a more efficient data structure.
+4. **Inefficient counting**: The `countUnexpiredTokens` method iterates through all tokens (including expired ones) every time it's called. This is inefficient for large numbers of tokens, using a more efficient data structure.
 
-6. **No token expiration mechanism**: There's no way to manually or automatically clean up expired tokens. Add a method to remove expired tokens, and this new method can be invoked everytime a token is generated, renewed and unexpired tokens are counted.
+5. **No token expiration mechanism**: There's no way to manually or automatically clean up expired tokens. The token manager should have a min-heap[(token_expiry, token)] and a method to remove expired tokens, and this new method can be invoked everytime a token is generated, renewed and unexpired tokens are counted.
 
-7. **No logging or monitoring**: There's no logging capability for debugging, auditing, or monitoring token operations. Consider adding logging for important operations.
+6. **No logging or monitoring**: There's no logging capability for debugging, auditing, or monitoring token operations. Consider adding logging for important operations.
 
-8. **No way to check token existence**: There's no method to check if a token exists or to get token information (like expiry time) without modifying it.
+7. **No way to check token existence**: There's no method to check if a token exists or to get token information (like expiry time) without modifying it.
 
-9. **No way to delete tokens**: There's no method to explicitly delete/revoke tokens before they expire.
+8. **No way to delete tokens**: There's no method to explicitly delete/revoke tokens before they expire.
 
-10. **No way to expire tokens**: There's no method to explicitly expire the tokens at a given time.
+9. **No way to expire tokens**: There's no method to explicitly expire the tokens at a given time.
 
-11. **Potential integer overflow**: For very large `currentTime` values, adding `timeToLive` could theoretically cause integer overflow (though unlikely in practice with Python's arbitrary precision integers).
+10. **Potential integer overflow**: For very large `currentTime` values, adding `timeToLive` could theoretically cause integer overflow (though unlikely in practice with Python's arbitrary precision integers).
 
 ## Unit Tests to Add
 
